@@ -1,0 +1,1026 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+:root {
+    /* Light Theme */
+    --bg-primary: linear-gradient(to bottom, #a0c4ff, #3a86ff);
+    --header-bg: rgba(255, 255, 255, 0.3);
+    --header-text: #fff;
+    --nav-bg: rgba(255, 255, 255, 0.2);
+    --nav-item-hover: rgba(255, 255, 255, 0.4);
+    --nav-item-active: rgba(255, 255, 255, 0.6);
+    --content-bg: rgba(255, 255, 255, 0.2);
+    --text-color: #fff;
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-border: rgba(255, 255, 255, 0.4);
+    --button-bg: #1e40af;
+    --button-hover-bg: #3b82f6;
+    --save-btn-bg: #0d9488;
+    --save-btn-hover-bg: #0f766e;
+    --day-forecast-bg: rgba(255, 255, 255, 0.1);
+    --map-garland-color: #d1b46a; /* Золотистий */
+    --map-garland-light: #ffd700; /* Яскраво-золотистий */
+    --map-garland-shadow: rgba(255, 215, 0, 0.6);
+
+    /* Dark Theme */
+    --dark-bg-primary: linear-gradient(to bottom, #0a1128, #1b263b);
+    --dark-header-bg: rgba(0, 0, 0, 0.4);
+    --dark-header-text: #e0f2f7;
+    --dark-nav-bg: rgba(0, 0, 0, 0.3);
+    --dark-nav-item-hover: rgba(0, 0, 0, 0.5);
+    --dark-nav-item-active: rgba(0, 0, 0, 0.7);
+    --dark-content-bg: rgba(0, 0, 0, 0.4);
+    --dark-text-color: #e0f2f7;
+    --dark-input-bg: #2e3d50;
+    --dark-input-border: #4a5d73;
+    --dark-button-bg: #3b82f6;
+    --dark-button-hover-bg: #60a5fa;
+    --dark-save-btn-bg: #14b8a6;
+    --dark-save-btn-hover-bg: #0d9488;
+    --dark-day-forecast-bg: rgba(0, 0, 0, 0.3);
+    --dark-map-garland-color: #a37b00; /* Темно-золотистий */
+    --dark-map-garland-light: #ffeb3b; /* Яскраво-жовтий */
+    --dark-map-garland-shadow: rgba(255, 235, 59, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    position: relative; /* Важливо для z-index дочірніх елементів */
+    z-index: 1; /* Задаємо z-index для body */
+}
+
+/* Dark Theme */
+body.dark-theme {
+    background: var(--dark-bg-primary);
+    color: var(--dark-text-color);
+}
+
+.header {
+    background-color: var(--header-bg);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 100; /* Вищий z-index для хедера */
+    position: relative; /* Важливо для z-index */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+body.dark-theme .header {
+    background-color: var(--dark-header-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.header h1 {
+    color: var(--header-text);
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Відстань між текстом та сніжинкою */
+    transition: color 0.5s ease;
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-theme .header h1 {
+    color: var(--dark-header-text);
+}
+
+/* Стиль для сніжинки в логотипі */
+.logo-snowflake {
+    font-size: 1.5em; /* Розмір сніжинки */
+    color: #fff; /* Білий колір для сніжинки */
+    line-height: 1;
+}
+.logo-snowflake::before {
+    content: '❄️'; /* Unicode символ сніжинки */
+}
+
+
+/* Header Right - Buttons and Theme Switcher */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+/* Стилі для кнопки "Увійти" */
+.login-btn {
+    background-color: #3b82f6; /* Синій колір */
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #2563eb; /* Темніший синій при наведенні */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Стилі для кнопки "Вийти" */
+.logout-btn {
+    background-color: #dc3545; /* Червоний колір */
+    color: white;
+}
+
+.logout-btn:hover {
+    background-color: #c82333; /* Темніший червоний при наведенні */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Стилі для блоку привітання */
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f8f8f8;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.username-display {
+    font-weight: 700;
+    color: #ffe082;
+}
+
+/* Приховування елементів */
+.hidden {
+    display: none !important;
+}
+
+/* --- Dark Theme Adustments --- */
+body.dark-theme .header-btn {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .login-btn {
+    background-color: var(--dark-button-bg);
+}
+
+body.dark-theme .login-btn:hover {
+    background-color: var(--dark-button-hover-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .logout-btn {
+    background-color: #ef4444;
+}
+
+body.dark-theme .logout-btn:hover {
+    background-color: #dc2626;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .user-greeting {
+    color: var(--dark-header-text);
+}
+
+body.dark-theme .username-display {
+    color: #ffea00;
+}
+
+
+/* Theme Switcher (Контейнер для іконки зміни теми) */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease;
+    position: relative; /* Needed for absolute positioning of icons */
+    overflow: hidden; /* Hide overflowing icon during transition */
+}
+
+.theme-switcher:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+body.dark-theme .theme-switcher {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .theme-switcher:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Base icon style */
+.theme-switcher .icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Sun icon (visible in light theme) */
+.theme-switcher .sun-icon {
+    opacity: 1;
+    transform: translateY(0);
+    fill: #f5c71d; /* Sun color */
+}
+
+/* Moon icon (visible in dark theme) */
+.theme-switcher .moon-icon {
+    opacity: 0; /* Hidden by default */
+    transform: translateY(100%); /* Start off-screen */
+    fill: #e0f2f7; /* Moon color */
+}
+
+/* Dark theme specific icon states */
+body.dark-theme .theme-switcher .sun-icon {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+body.dark-theme .theme-switcher .moon-icon {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Main Container */
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+    gap: 20px;
+    position: relative;
+    z-index: 10; /* Вищий z-index, ніж сніжинки */
+}
+
+/* Nav Menu */
+.nav-menu {
+    background-color: var(--nav-bg);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    width: 220px;
+    flex-shrink: 0;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .nav-menu {
+    background-color: var(--dark-nav-bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.nav-item {
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 12px 15px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .nav-item {
+    color: var(--dark-text-color);
+}
+
+.nav-item:hover {
+    background-color: var(--nav-item-hover);
+}
+
+body.dark-theme .nav-item:hover {
+    background-color: var(--dark-nav-item-hover);
+}
+
+.nav-item.active {
+    background-color: var(--nav-item-active);
+    font-weight: 600;
+}
+
+body.dark-theme .nav-item.active {
+    background-color: var(--dark-nav-item-active);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+}
+
+/* Content Sections Container */
+.content-section-container {
+    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+}
+
+/* Content Sections */
+.content-section {
+    flex-grow: 1;
+    background-color: var(--content-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .content-section {
+    background-color: var(--dark-content-bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.content-section h2, .content-section h3 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    transition: color 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .content-section h2, body.dark-theme .content-section h3 {
+    color: var(--dark-text-color);
+}
+
+.info-block {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .info-block {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Weather Specific */
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.weather-container h2 {
+    text-align: center;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.input-group input,
+.input-group select {
+    padding: 10px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    flex-grow: 1;
+    min-width: 150px;
+    transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .input-group input,
+body.dark-theme .input-group select {
+    background-color: var(--dark-input-bg);
+    color: var(--dark-text-color);
+    border: 1px solid var(--dark-input-border);
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-theme .input-group input::placeholder {
+    color: #aebfd0;
+}
+
+.input-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.input-group button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+body.dark-theme .input-group button {
+    background-color: var(--dark-button-bg);
+}
+
+body.dark-theme .input-group button:hover {
+    background-color: var(--dark-button-hover-bg);
+}
+
+.save-btn {
+    background-color: var(--save-btn-bg);
+}
+
+.save-btn:hover {
+    background-color: var(--save-btn-hover-bg);
+}
+
+body.dark-theme .save-btn {
+    background-color: var(--dark-save-btn-bg);
+}
+
+body.dark-theme .save-btn:hover {
+    background-color: var(--dark-save-btn-hover-bg);
+}
+
+
+#forecast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.day-forecast {
+    background-color: var(--day-forecast-bg);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .day-forecast {
+    background-color: var(--dark-day-forecast-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.day-forecast .day-date {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.day-forecast .day-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.day-forecast .day-temp div {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.day-forecast .day-temp div:last-child {
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/* Map specific styles */
+.map-garland-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9/16 = 0.5625) */
+    background-color: #34495e; /* Темний фон для карти */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1; /* Всередині content-section */
+}
+
+.map-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1; /* Всередині map-garland-container */
+}
+
+.map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Christmas Garland Styling */
+.garland-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px; /* Висота гірлянди */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--map-garland-color); /* Колір "дроту" гірлянди */
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 2; /* Поверх карти */
+}
+
+body.dark-theme .garland-lights {
+    background-color: var(--dark-map-garland-color);
+}
+
+.garland-lights .light {
+    width: 15px;
+    height: 15px;
+    background-color: var(--map-garland-light); /* Колір світла */
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--map-garland-shadow), 0 0 15px var(--map-garland-shadow);
+    animation: pulse 1.5s infinite alternate;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+body.dark-theme .garland-lights .light {
+    background-color: var(--dark-map-garland-light);
+    box-shadow: 0 0 8px var(--dark-map-garland-shadow), 0 0 15px var(--dark-map-garland-shadow);
+}
+
+/* Animation for lights */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* Christmas Decorations on Map Wrapper */
+.christmas-stars, .christmas-snowflakes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Щоб не блокувати взаємодію з картою */
+    overflow: hidden;
+    z-index: 3; /* Ще вище, ніж гірлянда */
+}
+
+.christmas-stars::before {
+    content: '⭐'; /* Юнікод-зірка */
+    position: absolute;
+    font-size: 20px;
+    animation: twinkle 5s infinite ease-in-out;
+    top: 15%; /* Початкова позиція */
+    left: 85%; /* Початкова позиція */
+}
+.christmas-stars::after {
+    content: '✨'; /* Юнікод-блискітка */
+    position: absolute;
+    font-size: 18px;
+    top: 70%;
+    left: 20%;
+    animation: twinkle 6s infinite ease-in-out reverse;
+}
+
+.christmas-snowflakes::before {
+    content: '❄️'; /* Юнікод-сніжинка */
+    position: absolute;
+    font-size: 22px;
+    top: 10%;
+    left: 80%;
+    animation: fall-decor 10s linear infinite; /* Змінено назву, щоб уникнути конфлікту */
+}
+.christmas-snowflakes::after {
+    content: '🌨️'; /* Юнікод-хмара зі снігом */
+    position: absolute;
+    font-size: 24px;
+    top: 50%;
+    left: 5%;
+    animation: fall-decor 12s linear infinite reverse; /* Змінено назву */
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Анімація для різдвяних прикрас на карті */
+@keyframes fall-decor { /* Нова назва анімації */
+    0% { transform: translateY(-10%) translateX(0); opacity: 0.5; }
+    100% { transform: translateY(110%) translateX(50px); opacity: 1; }
+}
+
+
+/* Saved Locations */
+.saved-locations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.saved-location-item {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .saved-location-item {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.saved-location-item:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+body.dark-theme .saved-location-item:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.saved-location-item .location-name {
+    font-weight: 500;
+    cursor: pointer;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.saved-location-item .remove-location-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+}
+
+.saved-location-item .remove-location-btn:hover {
+    background-color: #dc2626;
+}
+
+.no-locations-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .no-locations-message {
+    color: rgba(224, 242, 247, 0.7);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.5em;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .main-container {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .nav-menu {
+        width: 100%;
+        flex-direction: row; /* Навігація в рядок */
+        justify-content: center;
+        flex-wrap: wrap; /* Дозволяє кнопкам переноситися */
+    }
+
+    .nav-item {
+        flex-grow: 1;
+        justify-content: center;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group button {
+        width: 100%;
+        min-width: unset;
+    }
+
+    #forecast {
+        grid-template-columns: 1fr; /* Один стовпець на мобільних */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+    .user-greeting {
+        font-size: 0.9rem;
+    }
+
+    .map-garland-container {
+        padding-bottom: 75%; /* Змінюємо співвідношення для мобільних, щоб карта була вищою */
+    }
+}
+
+/* --- Snowflakes (Цей блок додайте в style.css) --- */
+.snowflake {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none; /* Важливо: дозволяє клікати по елементах під сніжинками */
+    z-index: -1; /* Змінено з 9999 на -1, щоб сніжинки були на фоні */
+    animation: fall linear infinite;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Анімація для сніжинок на фоні */
+@keyframes fall {
+    0% {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110%);
+        opacity: 0;
+    }
+}
+
+/* Стилі для контейнера автентифікації на register.html */
+.auth-container {
+    background-color: var(--content-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 450px;
+    margin: 50px auto; /* Центрування */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* Важливо для z-index */
+    z-index: 10; /* Переконайтеся, що форма поверх сніжинок */
+}
+
+body.dark-theme .auth-container {
+    background-color: var(--dark-content-bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.auth-container h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+body.dark-theme .auth-container h2 {
+    color: var(--dark-text-color);
+}
+
+.form-toggle {
+    display: flex;
+    margin-bottom: 25px;
+    width: 100%;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .form-toggle {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .toggle-btn {
+    color: var(--dark-text-color);
+}
+
+.toggle-btn.active {
+    background-color: var(--button-bg);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .toggle-btn.active {
+    background-color: var(--dark-button-bg);
+}
+
+.auth-form {
+    width: 100%;
+    display: none; /* Приховуємо за замовчуванням */
+    flex-direction: column;
+    gap: 15px;
+    transition: opacity 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-form.active {
+    display: flex; /* Показуємо активну форму */
+}
+
+.auth-form .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+}
+
+.auth-form label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+body.dark-theme .auth-form label {
+    color: var(--dark-text-color);
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+body.dark-theme .auth-form input {
+    background-color: var(--dark-input-bg);
+    color: var(--dark-text-color);
+    border-color: var(--dark-input-border);
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--button-bg);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+body.dark-theme .auth-form input:focus {
+    border-color: var(--dark-button-bg);
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--button-bg);
+    color: white;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .submit-btn {
+    background-color: var(--dark-button-bg);
+}
+
+body.dark-theme .submit-btn:hover {
+    background-color: var(--dark-button-hover-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #ffdd77; /* Жовтуватий для помилок */
+    /* Зелений для успіху встановлюється в JS */
+}
+
+/* Переконайтеся, що main-container на register.html має flex-direction: column; */
+.main-container.register-page {
+    justify-content: center;
+    align-items: center;
+}
